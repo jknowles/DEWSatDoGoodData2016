@@ -1,0 +1,1226 @@
+<style>
+
+body, p, td, li, div {
+  font-size: 18pt;
+  color: white;
+}
+
+h1,h2,h3,h4,h5,h6 {
+        text-shadow: 0 0 0 #000 !important;
+  color: white;
+}
+
+.section .reveal .state-background {
+   background: black;
+}
+
+span.centerImage {
+     text-align: center;
+}
+.section .reveal h2,
+.section .reveal h3,
+.section .reveal p {
+   color: white;
+   margin-top: 50px;
+}
+
+
+.reveal blockquote {
+  background: black;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+.reveal section del {
+  color: red;
+}
+
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+blockquote p {
+  display inline;
+}
+
+.reveal pre {   
+  margin-top: 0;
+  max-width: 95%;
+  border: 1px solid #ccc;
+  white-space: pre-wrap;
+  margin-bottom: 1em; 
+  color: black;
+}
+
+.reveal a:not(.image) {
+  color: red;
+  text-decoration: none;
+  -webkit-transition: color .15s ease;
+  -moz-transition: color .15s ease;
+  -ms-transition: color .15s ease;
+  -o-transition: color .15s ease;
+  transition: color .15s ease; }
+
+.reveal a:not(.image):hover {
+  color: #0000f1;
+  text-shadow: none;
+  border: none; }
+
+.reveal .roll span:after {
+  color: #fff;
+  background: #00003f; }
+
+.reveal pre code {
+  display: block; padding: 0.5em;
+  font-size: 1.6em;
+  line-height: 1.1em;
+  background-color: white;
+  overflow: visible;
+  max-height: none;
+  word-wrap: normal;
+  color: black;
+}
+.reveal .state-background {
+  background: black;
+} 
+
+.reveal section p {
+  color: white;
+}
+
+.reveal section h1 {
+  color: white;
+}
+
+.reveal section h2 {
+  color: white;
+}
+
+.reveal section h3 {
+  color: white;
+}
+
+</style>
+
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full" type="text/javascript">
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { scale: 100}
+  });
+</script>
+
+Statistical Learning and Applied Modeling in Education
+========================================================
+Examples and Concerns
+------------------------------------------------------
+
+## **Jared Knowles**
+## **01-31-2014**
+
+Motivation
+===================================================
+incremental: true
+
+- Of the two modeling cultures, we've tended to focus overwhelmingly on one
+- Computation increases are changing everything
+- Data is growing and many problems have different issues
+- Prediction is underused and undervalued, and this undermines inference
+
+The Data Modeling Culture
+=================================
+
+- Starts philosophically with the idea that we have written down a set of X that 
+describe Y with a known functional form that we are testing
+- Black box between x and y can be known because the data generating process 
+DGP is some functional combination of predictors, parameters, and noise
+- Model fit is based on goodness of fit and residual tests
+
+<img src="img/DataModel.png" title="Data Models" alt="FP" style="display: block; margin:0 auto;" />
+
+The Algorithmic Modeling Culture
+========================================
+
+- Black box is unknowable - we are not modeling nature but seeking to use similar 
+inputs to predict the outputs of the natural process
+- Model fit measured by prediction accuracy
+
+<img src="img/AlgoModel.png" title="Algorithmic Models" alt="FP" style="display: block; margin:0 auto;" />
+
+
+The Wisconsin Dropout Early Warning System
+===============================================
+type: section
+
+> "To help keep all kids on a path to graduation, we just delivered - with no new funding - a new statewide Dropout Early Warning System, called DEWS, to all districts. DEWS makes it possible to identify kids who may be at risk, and allows districts to intervene as early as middle school." ~ Tony Evers
+
+DEWS
+========================================================
+
+- The Dropout Early Warning System for the Wisconsin Department of Public Instruction
+- Leverages DPI's administrative records to provide predictions on student high school 
+completion while students are in middle grades
+- Communicates the results to school staff in all Wisconsin public schools serving 
+students in the middle grades
+- Comes with an interpretive guide and strategies for success [available online](http://wise.dpi.wi.gov/wise_dashdews)
+- Released in September of 2013, with bi-annual updates in April and August
+- Serves as a good example of where social science and applied modeling intersect
+
+Why DEWS?
+========================================================
+
+- Every child a graduate, college and career ready -- Agenda 2017, DPI's strategic 
+plan
+- DEWS focuses on providing schools and districts an **early** notice of 
+whether or not a student is likely to complete high school on time
+- DEWS uses data on historical cohorts of students in Wisconsin to link middle 
+grade student outcome data with the long-term outcome of on time graduation
+- DEWS provides a **relatively accurate** assessment of the likelihood of 
+on time graduation for individual students across the state
+
+
+Graduation and Droput By the Numbers
+============================================
+
+9,092 **students in 2010-11 did not graduate with their cohort.**
+
+| Group | Expected | Grads  |  Rate  | Difference | 
+| --------- | ------ | -----| -------|  --------: |
+| White     | 54,468 | 49,783  | 91.4% | -    |
+| American Indian | 1,027 | 737| 71.7% | **19.7** |
+| Asian     |  2,517 | 2,225   | 88.4% | **3**    |
+| Black     |  6,889 | 4,395   | 63.8% | **27.6** |
+| Hispanic  |  4,751 | 3,420   | 72.0% | **19.4** |
+| Total     | 69,652 | 60,560  | 86.9% | -    |
+
+
+What is DEWS? 
+=========================================================
+incremental: true
+
+DEWS is an applied statistical model that combines several major features:
+
+- Data import, filtering, and cleaning for analysis from the state longitudinal 
+database
+- A machine learning algorithm to search for the best predictive model
+- A prediction routine to apply models to current students
+- An exporting feature to push predictions into the state business intelligence 
+tool, WISEdash for Districts
+- A display layer available to schools and districts securely for exploring the results
+- In reality, it resembles **software** as much as a statistical analysis
+
+
+Under the Hood of DEWS
+=========================================================
+incremental: true
+
+DEWS consists of several sub-routines that can be thought of as states of building 
+a statistical model
+
+1. Data acquisition
+2. Data cleaning, normalizing, and standardizing
+3. Model feature and model algorithm search
+4. Model testing
+5. Model selection
+6. New case scoring
+7. Prediction export for reporting
+
+All modules are built in the free and open source statistical computing language, [R](http://www.r-project.org/). 
+
+DEWS by the Numbers
+=====================================================
+- <small>Analyzes over **250,000** historical records of student graduation
+- Provides predictions on over **180,000** students in the state
+- Produces predictions on students in over **1,000** schools
+- Selects from over **50** candidate statistical models **per grade**
+- Hundreds of users have accessed thousands of individual student reports across 
+nearly every Wisconsin school district
+- [Working on open sourcing the code](www.github.com/jknowles)
+- Being explored in Michigan, New Jersey, and school districts in Kansas, Montana, 
+and Minnesota
+</small>
+
+DEWS as an Applied Model
+====================================
+type: section
+
+Data and Computing Trends
+======================================================
+
+- Available data in education is growing astronomically. 
+- People are talking about things like "data science" and "big data" [even NSF](http://www.nsf.gov/cise/news/bigdata.jsp).
+- Data sources are shifting from national surveys to administrative records
+- More data = more problems; more data + more sources = more problems$^{2}$
+
+Increased Computational Power
+======================================================================
+
+<img src="img/float-point-perf.png" title="Single Thread FP" alt="FP" style="display: block; margin:0 auto;" />
+
+<small> Increased data size and complexity leads to new problems that increased 
+computational power often helps to solve.</small>
+
+Examples of Challenges and Solutions Posed by Computation
+===========================================================
+- <small>Bigger datasets have highly complex structures to them such as deep hierarchies, 
+cross classifications, and high collinearity
+  - Methods like HLM have difficulty scaling to 3, 4, or 5 levels that may exist 
+  within a statewide data system
+  - Cross-nested and cross-classified observations are common in observational data, 
+  and difficult to deal with for many approaches
+  - Alternative methods like Bayesian mixed effect regression or regression trees 
+  are more CPU intensive, but more flexible
+  - With 12 regions, 72 counties, 424 districts, 2,200 schools, and tens of thousands 
+  of classrooms and hundreds of thousands of students the modeling data structure is complex
+</small>
+
+Straining our Generalized Linear Models
+==============================================
+- <small>Increased number of predictors allows us to build models of complex group interactions 
+that separate
+- Parameter estimates of demographic indicators are invalid when the demographic 
+indicator is not observed in each outcome category (they are perfectly collinear)
+- Quasi-separation can occur when this is close
+- Corrections exist to adjust for the fact that maximum likelihood estimates 
+are invalid in this case (Bayesian estimates, Firth bias-correction)
+- Again, leveraging computation to address a problem of increased data complexity
+</small>
+
+DEWS
+==================================================
+
+- DEWS data has a complicated hierarchical structure
+- DEWS data has rare cases that have to be addressed (e.g. blind students) across 
+most indicators
+- Using CPU-intensive techniques can work, but is not limitless -- some models 
+are too slow to developed, modified, evaluated, and implemented
+- As it is, DEWS takes about 48 hours to build data and models, test them, 
+select the winners, and produce predictions for current students
+- But in the future... who knows?
+
+
+Being a Modeling Pluralist
+=============================================
+type: section
+
+> Schools of statistical thoughts are sometimes jokingly likened to religions. This analogy is not perfect - unlike religions, statistical methods have no supernatural content and make essentially no demands on our personal lives. Looking at the comparison from the other direction, it is possible to be agnostic, atheistic, or simply live one's life without religion, but it is not really possible to do statistics without some philosophy. ~ Andrew Gelman
+
+
+What is a statistical model?
+===============================
+
+- "All models are wrong, some models are useful" ~ George Box
+- Statistical models are mathematical summaries of correlations and probabilities 
+of known data
+- Being wrong is a **feature of a statistical model**, the goal is to explain 
+as much data as possible with as few variables as possible
+- The most common in the social sciences is the linear regression model
+- Sometimes the goal is **inference** and other times it is **prediction**
+
+
+Statistical Modeling
+=======================================================
+
+It is useful to remember that in all statistical modeling we are looking at the
+following relationship:
+
+$$ \hat{Y} = \hat{f}(X) $$
+
+In this case $\hat{f}$ represents our estimate of the function that links $X$ and 
+$Y$. In traditional linear modeling, $\hat{f}$ takes the form:
+
+$$ \hat{Y} = \alpha + \beta(X) + \epsilon $$
+
+However, there exist limitless alternative $\hat{f}$ which we can explore. Applied modeling techniques help us expand the $\hat{f}$ space we search within.
+
+
+
+Functional forms
+==============================
+
+```{r echo=FALSE, fig.width=12, fig.height=8, fig.align='center', fig.cap="Figure Adapted from James et al. 2013"}
+library(eeptools)
+x    <- c(1, 2, 3, 4, 5, 6, 7, 8)
+y    <- c(14, 12, 10, 8, 6, 4, 2, 0)
+
+jitter <- function(x) x + runif(1, min=-.5, max=.5)
+x <- sapply(x, jitter)
+y <- sapply(y, jitter)
+
+labs <- c("Lasso", "Subset Selection", "Least Squares", 
+          "Generalized Linear Models", "KNN", "Trees", "Bagging, Boosting", 
+          "Support Vector Machines")
+
+qplot(x, y, geom='text', label=labs) + theme_classic() + 
+  scale_x_continuous("Flexibility", limits=c(min(x) - 0.5, max(x) + 0.5)) +
+  scale_y_continuous("Interpretability", limits=c(min(y) - 0.5, max(y) + 0.5)) +
+  labs(title="Functional Forms and Tradeoffs") + theme_dpi(base_size=18) +
+  theme(axis.text=element_blank(), axis.ticks=element_blank())
+```
+
+<small>Figure adapted from James et al. 2013 (figure 2.7)</small>
+
+Buyer Beware
+===========================================
+type:section
+
+> A big computer, a complex algorithm and a long time does not equal science. ~ Robert Gentleman
+
+
+Statistical Learning or Statistical Inference?
+=================================================================
+
+The line between statistical learning and statistical inference has always been 
+blurry and unclear. A few questions can help:
+
+- <small>Am I interested in accurately estimating unobserved observations based on what 
+I have learned in my sample?
+- Am I interested in the relationships among the parameters in my sample because 
+of a theory I am testing, or because of how they can explain an outcome I am 
+interested in?
+- Is the data I am using common and relatively untransformed? Will new data be 
+created regularly that I can fit the same model to and update?
+</small>
+
+Why the Difference?
+========================================================
+
+Algorithmic Models:
+
+- Provide information to users about what to expect given certain data
+- Serve many goals including prediction of non-observed 
+outcomes, summarizing large datasets, measuring uncertainty
+- Goals for the model are defined by explicit tradeoffs
+
+***
+
+Data Models: 
+
+- Focused on understanding patterns in the current data
+- Seek to understand how current data extrapolates to a population
+- Estimates population parameters from sample data about relationships between 
+inputs and outputs
+
+Predicting Dropout
+=====================================================
+
+Algorithmic Models:
+<small>
+- Data: Regularly collected at specific timepoints, standardized
+- Many cohorts with common data
+- Interested in learning which students today are likely to dropout in the future
+- Want: Confident predictions on likely graduation of new students, used to decide how
+to allocate resources and services to students
+</small>
+
+***
+
+Data Models:
+<small>
+- Data: national survey data, unlikely to be collected on future observations 
+- One cohort is followed in the data set
+- Interested in learning if social and emotional concerns are more important than 
+academic success in predicting graduation
+- Want: unbiased and precise estimates of parameters and if possible ability to make 
+causal claims
+</small>
+
+On Prediction
+===================================================
+
+- Note that prediction is important in both cases
+- In data models, making a good prediction is the sign that our theory has 
+explanatory power
+- In algorithmic models, making a good prediction is a sign that we have approximated 
+the natural process correctly
+- In both cases, we should care deeply about prediction and think carefully about 
+measuring it
+
+On Nails, Hammers, and Models
+===================================================
+type: section
+
+> The best available solution to a data problem might be a data model; then again
+it might be an algorithmic model. The data and the problem guide the solution. To 
+solve a wider range of data problems, a larger set of tools is needed. ~ Leo Breiman
+
+Some Vocabulary
+========================================================
+
+- Training data
+- Test data
+- Bias (error)
+- Variance (error)
+
+
+***
+
+- Data the model is fit to (analytical sample)
+- Data the model predicts, to evaluate model fit
+- Refers to the amount of error due to simplifying a complex process
+- The amount the $f$ would change if fit to a different training set of data
+
+
+The Challenge
+=================================
+
+- When using a statistical model to make predictions we have to think clearly 
+about the data we use to build the model, and the data we will be making 
+predictions about
+- We may build a model with high **internal validity** for the data at hand, 
+but that data may not be representative of the data the model will apply to
+- We call this the **training error** and the **test error**
+- In inferential statistics we often seek to reduce **training error** and not 
+concern ourselves with **test error**
+- In applied modeling we focus on finding the optimal tradeoff between **variance** and **bias** 
+in order to reduce **test error**
+
+
+A Simple Motivating Example
+=================================
+
+```{r, echo=FALSE, results='hide', fig.align='center', fig.width=9}
+library('quantmod')
+library('lubridate')
+library(eeptools)
+
+getSymbols("AAPL")
+AAPL$year <- year(index(AAPL))
+AAPL$yearL <- lag(AAPL$year)
+AAPL$yearSTART <- 0
+AAPL$yearSTART[AAPL$year - AAPL$yearL > 0] <- 1
+AAPL$yearL <- NULL
+AAPL$lag <- lag(AAPL$AAPL.Adjusted)
+AAPL$lag2 <- lag(AAPL$AAPL.Adjusted, 2)
+AAPL$lag3 <- lag(AAPL$AAPL.Adjusted, 3)
+AAPL$lag30 <- lag(AAPL$AAPL.Adjusted, 30)
+AAPL$lag90 <- lag(AAPL$AAPL.Adjusted, 90)
+
+plotdf <- as.data.frame(AAPL)
+plotdf$time <- row.names(plotdf)
+plotdf <- plotdf[300:1700,]
+plotdf$group <- NA
+plotdf$group[50:300] <- 1
+plotdf$group[300:500] <- 2
+
+plotdf$time2 <- as.factor(plotdf$time)
+plotdf$time2 <- as.numeric(plotdf$time2)
+
+pred.con <- loess.control(surface="direct")
+
+model1 <- loess(AAPL.Adjusted ~ time2 + lag + lag30, 
+                data=plotdf[plotdf$group==1,], 
+                control=pred.con, parametric=c("lag"))
+
+xrange <- range(plotdf$time2)
+xseq <- seq(from=xrange[1], to=xrange[2], length=nrow(plotdf))
+pred <- predict(model1, newdata = data.frame(time2 = xseq, lag=plotdf$lag, 
+                                             lag30 = plotdf$lag30,
+                                             lag90 = plotdf$lag90), se=TRUE)
+y = pred$fit
+ci <- pred$se.fit * qt(0.95 / 2 + .5, pred$df)
+ymin = y - ci
+ymax = y + ci
+loess.DF <- data.frame(x = xseq, y) #, ymin, ymax, se = pred$se.fit)
+
+model2 <- loess(AAPL.Adjusted ~ time2 + lag + lag30, 
+                data=plotdf[500:800,], 
+                control=pred.con,  parametric=c("lag"))
+
+xrange <- range(plotdf$time2)
+xseq <- seq(from=xrange[1], to=xrange[2], length=nrow(plotdf))
+pred <- predict(model2, newdata = data.frame(time2 = xseq, lag=plotdf$lag, 
+                                             lag30 = plotdf$lag30,
+                                             lag90 = plotdf$lag90), se=TRUE)
+y = pred$fit
+ci <- pred$se.fit * qt(0.95 / 2 + .5, pred$df)
+ymin = y - ci
+ymax = y + ci
+loess.DF2 <- data.frame(x = xseq, y)
+
+
+idx1 <- plotdf$time2[plotdf$yearSTART==1][5]
+idx2 <- plotdf$time2[plotdf$yearSTART==1][4]
+idx3 <- plotdf$time2[plotdf$yearSTART==1][3]
+idx4 <- plotdf$time2[plotdf$yearSTART==1][2]
+
+qplot(time, AAPL.Adjusted, data = plotdf, geom='line', group=1) +
+     coord_cartesian(xlim=c(0,1400), ylim=c(60,700)) +
+  geom_vline(xintercept=idx1, color="red", linetype=3) + 
+  geom_vline(xintercept=idx2, color="red", linetype=3) + 
+  geom_vline(xintercept=idx3, color="red", linetype=3) + 
+  geom_vline(xintercept=idx4, color="red", linetype=3) + 
+  theme_dpi()+
+  theme(axis.text.x=element_blank(), axis.ticks=element_blank(), 
+        panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank()) + 
+  labs(title = "Apple Stock from 2007-2014")
+
+```
+
+
+Forecasting Apple Stock Could be Useful
+===========================================
+
+- Fit a model on the earlier part of the data (in blue)
+
+```{r, echo=FALSE, results='hide', fig.align='center', fig.width=9}
+
+qplot(time2, AAPL.Adjusted, data = plotdf, geom='line', group=1) +
+  geom_smooth(aes_auto(loess.DF),  data=loess.DF, stat="identity", se=FALSE) +
+     coord_cartesian(xlim=c(0,800), ylim=c(60,700)) +
+  geom_vline(xintercept=idx1, color="red", linetype=3) + 
+  geom_vline(xintercept=idx2, color="red", linetype=3) + 
+  geom_vline(xintercept=idx3, color="red", linetype=3) + 
+  geom_vline(xintercept=idx4, color="red", linetype=3) + 
+  theme_dpi()+
+      geom_smooth(method="lm", linetype=2, color=I("red")) +
+  theme(axis.text.x=element_blank(), axis.ticks=element_blank(), 
+        panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank()) +
+  annotate("rect", xmin=50, xmax=300, ymin=-Inf, ymax=200, fill="blue", 
+           alpha=0.25) + 
+  labs(title = "Apple Stock from 2007-2014")
+
+```
+
+Forecasts Are Tricky
+========================
+
+- Fit another model on the middle part of the data (purple)
+
+```{r, echo=FALSE, results='hide', fig.align='center', fig.width=9}
+qplot(time2, AAPL.Adjusted, data = plotdf, geom='line', group=1) +
+  geom_smooth(aes_auto(loess.DF2),  data=loess.DF2, stat="identity", 
+              se=FALSE, color="purple") +
+     coord_cartesian(xlim=c(200,1200), ylim=c(60,700)) +
+    geom_smooth(method="lm", linetype=2, color=I("red")) +
+  geom_vline(xintercept=idx1, color="red", linetype=3) + 
+  geom_vline(xintercept=idx2, color="red", linetype=3) + 
+  geom_vline(xintercept=idx3, color="red", linetype=3) + 
+  geom_vline(xintercept=idx4, color="red", linetype=3) + 
+  theme_dpi()+
+  theme(axis.text.x=element_blank(), axis.ticks=element_blank(), 
+        panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank()) +
+    annotate("rect", xmin=300, xmax=500, ymin=-Inf, ymax=300, 
+             fill="purple", alpha=0.25) + 
+  labs(title = "Apple Stock from 2007-2014")
+
+
+```
+
+
+Evaluating Model Fit
+==================================================
+
+How do we know how well our models fit? A **very brief** model comparison review:
+
+- $\\R^2$ - ratio of explained variation to total variation (generally)
+- Nested model tests: 
+  * F test and Likelihood ratio tests (restricted and unrestricted model)
+- Same sample tests:  
+  * AIC, BIC, etc. (different penalties for model parameters)
+- These don't give us a sense of how the model will do on **new** data, and they 
+are not easy to explain!
+
+
+Predicting New Data
+================================================
+
+- Test both models on the full data!
+
+```{r, echo=FALSE, results='hide', fig.align='center', fig.width=9}
+qplot(time2, AAPL.Adjusted, data = plotdf, geom='line', group=1) +
+  geom_smooth(aes_auto(loess.DF),  data=loess.DF, stat="identity", se=FALSE) +
+  geom_smooth(aes_auto(loess.DF2),  data=loess.DF2, stat="identity", 
+              se=FALSE, color="purple") +
+     coord_cartesian(xlim=c(0,1400), ylim=c(60,700)) +
+  geom_smooth(method="lm", linetype=2, color=I("red")) +
+  geom_vline(xintercept=idx1, color="red", linetype=3) + 
+  geom_vline(xintercept=idx2, color="red", linetype=3) + 
+  geom_vline(xintercept=idx3, color="red", linetype=3) + 
+  geom_vline(xintercept=idx4, color="red", linetype=3) + 
+  theme_dpi()+
+  theme(axis.text.x=element_blank(), axis.ticks=element_blank(), 
+        panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank()) +
+  annotate("rect", xmin=50, xmax=300, ymin=-Inf, ymax=300, fill="blue", 
+           alpha=0.25) +
+    annotate("rect", xmin=300, xmax=500, ymin=-Inf, ymax=300, 
+             fill="purple", alpha=0.25) + 
+  labs(title = "Apple Stock from 2007-2014")
+
+
+```
+
+
+The Bias - Variance Tradeoff
+=============================================
+
+- The purple and blue models are identical except each was "trained" on different 
+data, the difference between their predictions is **variance**
+- Both have the less bias on the data they are trained, but the linear model 
+  has a different bias - a feature of the flexibility in the model
+- Less flexible models like linear models will have more bias, but are less 
+variable in response to the data they are trained on
+- How do we pick the model? We think about which model fits our application best
+
+
+
+Model fit = Fit to signal + fit to noise
+============================================
+
+- Training data (sample) can lead to model overfit (the blue line)
+  - Non-linear behaviors can be right around the corner
+- Training data can lead to bias in future predictions (the purple line)
+  - Time changes things and the process/logic of updating models is important
+- We need both methods of $f$ and methods of evaluating models that 
+can insulate against overfit and reduce bias
+- This means different measures of model fit to choose among competing models
+
+
+Bias, Variance, Training, and Test Data
+======================================
+
+<small>Figure from Hastie, Tibshirani and Friedman (2009). Springer-Verlag (Figure 7.1) </small>
+
+<img src="img/ESLFig7.1.png" title="Variance and Bias" alt="ESL7.1" style="display: block; margin:0 auto; height:auto; width:auto; max-width:600px; max-height:700px"/>
+
+
+Measuring Fit Differently
+=============================
+
+1. Define a metric of accuracy (ROC, AUC, kappa, RMSE, etc.)
+2. Define a strategy to estimate test data accuracy/error
+3. Perform the test, sensitivity checks
+
+
+Metrics of Model Fit
+===============================
+
+- In the continuous case, Root Mean Square Error (RMSE)
+- In the discrete case, there are a number of options including kappa, 
+ROC, AUC, and others
+- ROC: Receiver Operating Characteristic, AUC: Area Under the (ROC) Curve
+- Many of these metrics can be extended to the multi-class case as well
+
+Confusion Matrix
+======================
+<table>
+  		<tr>
+				<td colspan="2" rowspan="2"></td>
+				<td colspan="2" style="background-color:#1b85b8; border: 2px solid #aaa">Actual</td>			
+			</tr>
+			<tr>
+				<td>Non-grad</td>
+				<td>Graduate</td>
+			</tr>
+			<tr>
+				<td rowspan="2" style="background-color:#ae5a41; border: 2px solid #aaa">Predicted</td>
+				<td>Non-grad</td>
+				<td><b>a</b></td>
+				<td><b>b</b></td>
+			</tr>
+			<tr>
+				<td>Graduate</td>
+				<td><b>c</b></td>
+				<td><b>d</b></td>
+			</tr>
+		</table>
+    
+Some performance metrics we can use:
+- Accuracy: $\frac{(a+d)}{(a+b+c+d)}$
+- Precision (positive predictive value) = $\frac{a}{(a+b)}$
+- Sensitivity (recall) = $\frac{a}{(a+c)}$
+- Specificity (negative predictive value) = $\frac{d}{(b+d)}$
+- False alarm (1-specificity) = $\frac{b}{(b+d)}$
+
+Confusion Matrix
+======================
+<table>
+      <tr>
+				<td colspan="2" rowspan="2"></td>
+				<td colspan="2" style="background-color:#1b85b8; border: 2px solid #aaa">Actual</td>			
+			</tr>
+			<tr>
+				<td>Non-grad</td>
+				<td>Graduate</td>
+			</tr>
+			<tr>
+				<td rowspan="2" style="background-color:#ae5a41; border: 2px solid #aaa">Predicted</td>
+				<td>Non-grad</td>
+				<td  style="background-color:#c3cb71; border: 2px solid #ead61c"><b>a</b></td>
+				<td><b>b</b></td>
+			</tr>
+			<tr>
+				<td>Graduate</td>
+				<td><b>c</b></td>
+				<td style="background-color:#c3cb71; border: 2px solid #ead61c"><b>d</b></td>
+			</tr>
+		</table>
+    
+
+Accuracy: $\frac{(a+d)}{(a+b+c+d)}$
+
+Accuracy is a good measure if our classes are fairly balanced and we care about 
+overall correctly dividing the data into the groups. 
+
+If one group is much larger than another though, this method can be misleading.
+
+Confusion Matrix
+======================
+<table>
+    	<tr>
+				<td colspan="2" rowspan="2"></td>
+				<td colspan="2" style="background-color:#1b85b8; border: 2px solid #aaa">Actual</td>			
+			</tr>
+			<tr>
+				<td>Non-grad</td>
+				<td>Graduate</td>
+			</tr>
+			<tr>
+				<td rowspan="2" style="background-color:#ae5a41; border: 2px solid #aaa">Predicted</td>
+				<td>Non-grad</td>
+				<td  style="background-color:#c3cb71; border: 2px solid #ead61c"><b>a</b></td>
+				<td  style="background-color:#c3cb71; border: 2px solid #ead61c"><b>b</b></td>
+			</tr>
+			<tr>
+				<td>Graduate</td>
+				<td><b>c</b></td>
+				<td><b>d</b></td>
+			</tr>
+		</table>
+    
+
+Precision (negative predictive value) = $\frac{a}{(a+b)}$
+
+- Of all the cases we predict to be **non-graduates**, what proportion actually graduate?
+- If we are interested in the **non-graduate** class, then this is a very useful metric 
+to understand how good we are at identifying this group. Useful if this class is a rare 
+class.
+
+Confusion Matrix
+======================
+<table>
+      <tr>
+				<td colspan="2" rowspan="2"></td>
+				<td colspan="2" style="background-color:#1b85b8; border: 2px solid #aaa">Actual</td>			
+			</tr>
+			<tr>
+				<td>Non-grad</td>
+				<td>Graduate</td>
+			</tr>
+			<tr>
+				<td rowspan="2" style="background-color:#ae5a41; border: 2px solid #aaa">Predicted</td>
+				<td>Non-grad</td>
+				<td  style="background-color:#c3cb71; border: 2px solid #ead61c"><b>a</b></td>
+				<td ><b>b</b></td>
+			</tr>
+			<tr>
+				<td>Graduate</td>
+				<td style="background-color:#c3cb71; border: 2px solid #ead61c"><b>c</b></td>
+				<td><b>d</b></td>
+			</tr>
+		</table>
+    
+
+Sensitivity (recall) = $\frac{a}{(a+c)}$
+
+- Of all the **non-graduate** cases, what percentage do we correctly identify (recall)?
+- Useful if we are interested in rare-event models where we want to accurately 
+identify rare events, and are less worried about how accurate we are with the modal 
+or common case. 
+
+Confusion Matrix
+======================
+<table>
+      <tr>
+  			<td colspan="2" rowspan="2"></td>
+				<td colspan="2" style="background-color:#1b85b8; border: 2px solid #aaa">Actual</td>			
+			</tr>
+			<tr>
+				<td>Non-grad</td>
+				<td>Graduate</td>
+			</tr>
+			<tr>
+				<td rowspan="2" style="background-color:#ae5a41; border: 2px solid #aaa">Predicted</td>
+				<td>Non-grad</td>
+				<td><b>a</b></td>
+				<td style="background-color:#c3cb71; border: 2px solid #ead61c"><b>b</b></td>
+			</tr>
+			<tr>
+				<td>Graduate</td>
+				<td><b>c</b></td>
+				<td style="background-color:#c3cb71; border: 2px solid #ead61c"><b>d</b></td>
+			</tr>
+		</table>
+    
+
+Specificity (positive predictive value) = $\frac{d}{(b+d)}$
+
+False alarm (1-specificity) = $\frac{b}{(b+d)}$
+
+- Of all the **graduate** cases, what proportion actually do we predict correctly?
+- If we are interested in one class, this metric is either interesting on its own, 
+or as the balancing metric (false alarm) that we seek to hold constant while 
+increasing our sensitivity. 
+
+Receiver Operating Characteristic
+====================================
+
+<img src="img/Roccurves.png" title="ROC" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto; max-width:300px; max-height:300px" />
+
+- <small>ROC represents the tradeoff between the fraction of non-graduates identified out of 
+all non-graduates, and the fraction of false non-graduates out of all graduates </small>
+
+***
+
+- <small>Can represent the variation in classification accuracy as the discrimination threshold 
+is varied
+- Can support decision analysis by allowing a decision to be made explicitly about the 
+balance between false-positives and false-negatives
+- Excellent for optimizing rare-class identification
+</small>
+
+Estimating the Test Error
+================================
+
+- In cases where observations are cheap, 50% of the sample is for training, 25% 
+for validation, and 25% for final testing
+- When data are not cheap, a number of methods can be used to approximate the 
+test set error
+- K fold cross-validation splits the data into 5 groups, and uses each group 
+1 time as a validation set, fitting the model to the other 4 groups
+  *  "Overall, ﬁve- or tenfold cross-validation are recommended as a good compromise..." Hastie et al p. 243
+- Alternatives include bootstraps, leave one out cross-validation, leave-group-out cross validation, out-of-bag estimates
+
+Summary of Methods
+================================================
+<table>
+<tr>
+<th>Method</th>
+<th>Data Loss</th>
+<th>External Validity</th>
+</tr>
+<tr>
+<td>Hold 1 Cohort Out</td>
+<td>Highest</td>
+<td>Highest</td>
+</tr>
+<tr>
+<td>Random Sample from Multiple Cohorts</td>
+<td>High</td>
+<td>Higher</td>
+</tr>
+<tr>
+<td>Simple Random Sample in Training Data</td>
+<td>Moderate</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Stratified Sample Within Training Data</td>
+<td>Moderate</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Repeated Fold Cross-Validation</td>
+<td>Low</td>
+<td>Moderate</td>
+</tr>
+</table>
+
+<small> The method used for estimating the test error is arguably more important 
+than the selection of the algorithm being tested. </small>
+
+Model Fit: Predicting Dropouts
+==================================================
+
+```{r echo=FALSE, fig.width=12, fig.height=8, fig.align='center'}
+
+ews <- read.csv("data/BowersEWSReviewData.csv")
+
+ews$flag <- "Other EWI"
+ews$flag[ews$id==1 | ews$id==2] <- "Chicago On-Track"
+ews$flag[ews$id > 3 & ews$id <14] <- "Balfanz ABC"
+ews$flag[ews$id ==85] <- "Muthèn Math GMM"
+ews$flag[ews$id==19] <- "Bowers GPA GMM"
+ews$flag <- factor(ews$flag)
+ews$flag <- relevel(ews$flag, ref="Other EWI")
+
+mycol <- c("Other EWI" = "gray70", "Chicago On-Track" = "blue", 
+           "Balfanz ABC" = "purple", 
+           "Muthèn Math GMM" = "orange", 
+           "Bowers GPA GMM" = "dark red")
+
+library(grid)
+
+qplot(1-specificity, sensitivity,data=ews, shape=flag, size=I(4), 
+     color=flag, geom='point') + scale_shape("EWI Type") +
+  scale_color_manual("EWI Type",values=mycol) +
+  geom_abline(intercept=0, slope=1, linetype=2) + 
+  coord_cartesian(xlim=c(0,1), ylim=c(0,1)) + theme_dpi(base_size=14) +
+  labs(x="False Alarm Proportion", y="True Positive Proportion",
+       title = "ROC Accuracy of Early Warning Indicators") + 
+  theme(legend.position = c(0.8, 0.2), 
+        legend.background = element_rect(fill=NULL, color="black")) + 
+  annotate(geom="segment", x=0.55, y=0.625, yend = 0.785, xend=0.4, 
+           arrow = arrow(length = unit(0.5, "cm"))) + 
+  annotate(geom="text", x=.365, y=.81, label="Better Prediction") +
+  annotate(geom="segment", x=0.65, y=0.625, yend = 0.5, xend=0.75, 
+           arrow = arrow(length = unit(0.5, "cm"))) + 
+  annotate(geom="text", x=.75, y=.48, label="Worse Prediction") +
+    annotate(geom="text", x=.75, y=.78, angle=37, label="Random Guess")
+
+```
+
+<small>Adapted from Bowers and Sprott 2013</small>
+
+Problems
+=================================================
+
+- Most EWIs have a low true positive identification rate
+- EWI literature does not report performance on a test dataset of future students
+- High performing EWIs have immense data requirements
+- Alarming false positive rates and no ability to tune these rates due to 
+single indicator
+- But... we have a strong baseline universe to compare to
+
+Evaluating Multiple DEWS Candidate Models Using ROC
+=====================================================
+
+```{r echo=FALSE, fig.width=12, fig.height=8, fig.align='center'}
+
+load("data/EWSmodelFitStatsFINAL.rda")
+
+ggplot(ews, aes(x= 1-specificity, y = sensitivity, shape=flag)) +
+  geom_point(size=I(4), alpha=I(0.4)) +
+  scale_shape("EWI Type") +
+  geom_abline(intercept=0, slope=1, linetype=2) + 
+  coord_cartesian(xlim=c(0,1), ylim=c(0,1)) + theme_dpi(base_size=14) +
+  labs(x="False Alarm Proportion", y="True Positive Proportion",
+       title = "Comparing EWIs in Literature, \n and Machine Learning Algorithms on Training Data ROC") + 
+  annotate(geom="text", x=.75, y=.78, angle=40, label="Random Guess") +
+   theme(legend.position = "bottom", 
+        legend.background = element_rect(fill=NULL, color="black"), 
+        legend.key.width = unit(.5, "cm")) +
+  geom_line(data=ModelFits[ModelFits$grp==2 & ModelFits$auc > 0.5,], 
+             aes(x=1-spec, y=sens, group=method,  
+                 linetype=NULL, color=method, fill= NULL,shape=NULL, size=NULL), 
+             size=I(1.05), linetype=1) + 
+  guides(col = guide_legend(nrow = 3))
+
+
+
+```
+
+
+AUCs Across Methods
+==================================================
+
+```{r echo=FALSE, fig.width=12, fig.height=8, fig.align='center'}
+table1 <- subset(ModelFits, select=c("method", "grp", "auc", "elapsedTime"))
+table1 <- table1[!duplicated(table1),]
+table1 <- table1[!is.na(table1$auc),]
+
+# mytab <- table1[table1$grp==1,]
+# mytab$elapsedTime <- mytab$elapsedTime / 60
+# mytab$auc <- round(mytab$auc, digits=2)
+# mytab$elapsedTime <- round(mytab$elapsedTime, digits=2)
+# print(head(mytab[order(-mytab$auc),], 5), row.names=FALSE)
+
+qplot(reorder(method, auc), auc, data=table1[table1$grp==1,], geom='bar', stat='identity') + 
+  coord_flip() + 
+  theme_dpi() + labs(title="Area Under the Curve for Test Data", x="Algorithm", 
+                     y = "AUC")
+
+```
+
+Selecting the Best Model
+====================================================
+incremental: true
+In an applied context we may consider additional criteria in selecting the best model:
+
+- Accuracy (on the test data)
+- Transparency (stakeholder support)
+- Speed (both for development, and providing on-time prediction)
+- Support costs (the model lives on)
+- Data availability
+- Stability (reduce data reliance)
+
+
+Data Cleaning
+==================================================
+type: section
+
+> The one line in your methods section that took 80% of the work. 
+
+Data Cleaning
+===================================================
+
+- Data cleaning decisions are incredibly consequential, yet little formal training 
+is made in their application
+- Sometimes cleaning takes the form of automatic filters, other times it is in 
+compliance with a business rule
+- Data cleaning is incredibly important when using administrative data
+- Data cleaning is **high stakes** in an applied setting
+- Knowing the content helps, asking an expert such as a database administrator is 
+even better
+
+Preparing Data
+=================================================
+
+1. Recoding categorical variables
+2. Centering and scaling
+3. Dealing with missingness
+
+
+Coding Categorical Data
+============================
+
+- Key tradeoff is between losing information by reducing categories and need to consolidate 
+sparse groups to produce valid estimates
+- Consider whether categories can be ordered, eases data demands for estimation
+- Solution is to propose collapses of groups that are similar with respect to the DV and 
+which are too small for strong estimates
+- There may be non-empirical concerns as well such as perception of groups of 
+categories as similar
+- May disappear in the end after feature / variable selection, but need to be considered
+
+
+Scale and Center the Continous Variables
+=============================================
+
+- Scaling and centering can reduce noise in assessment data (issues like lowest obtainable 
+scale score, grade and year equating)
+- Can help deal with attendance data that is heavily skewed toward the high end
+- Converting counts to percents helps keep units (like schools) on a similar scale
+- Improves the efficiency of many statistical algorithms and MCMC methods
+
+Missing Data Issues
+==================================================
+
+- Missing data is acutely important to predictive modeling, need to consider 
+when and what data you need to predict outcomes will be available
+- Data is often missing in administrative records, and is **almost never missing 
+at random** (students missing data are more likely to dropout!)
+- In Wisconsin, each additional year of data longitudinally that a method requires 
+**eliminates 10% of students** from receiving a prediction due to missing data
+- Identifying that the outcome is correctly classified and not a default assumption 
+is important - e.g. dropouts
+
+Communication
+==================================================
+type: section
+
+> Use graphics to display your model results to users. How to do that is a subject 
+for another talk. 
+
+The Most Accurate Model is Easy to Find!
+================================================
+
+```{r echo=FALSE, fig.width=12, fig.height=8, fig.align='center'}
+
+ggplot(ews, aes(x= 1-specificity, y = sensitivity, shape=flag)) +
+  geom_point(size=I(4), alpha=I(0.4)) +
+  scale_shape("EWI Type") +
+  geom_abline(intercept=0, slope=1, linetype=2) + 
+  coord_cartesian(xlim=c(0,1), ylim=c(0,1)) + theme_dpi(base_size=14) +
+  labs(x="False Alarm Proportion", y="True Positive Proportion",
+       title = "Comparing EWIs in Literature, \n and Machine Learning Algorithms on Training Data ROC") + 
+  annotate(geom="text", x=.75, y=.78, angle=40, label="Random Guess") +
+   theme(legend.position = "bottom", 
+        legend.background = element_rect(fill=NULL, color="black"), 
+        legend.key.width = unit(.5, "cm")) +
+  geom_line(data=ModelFits[ModelFits$grp==2 & ModelFits$auc > 0.5,], 
+             aes(x=1-spec, y=sens, group=method,  
+                 linetype=NULL, color=method, fill= NULL,shape=NULL, size=NULL), 
+             size=I(1.05), linetype=1) + 
+  guides(col = guide_legend(nrow = 3))
+
+
+
+```
+
+Credits
+====================
+- Some of the figures in this presentation are taken from "An Introduction to 
+Statistical Learning, with applications in R"  (Springer, 2013) with permission 
+from the authors: G. James, D. Witten,  T. Hastie and R. Tibshirani
+- CPU power graph: [http://preshing.com/20120208/a-look-back-at-single-threaded-cpu-performance/](http://preshing.com/20120208/a-look-back-at-single-threaded-cpu-performance/)
+- Example ROC graph from [Wikipedia](http://en.wikipedia.org/wiki/File:Roccurves.png)
+
+Contact Info
+===========================
+
+- DEWS Homepage: [http://wise.dpi.wi.gov/wisedash_dews](http://wise.dpi.wi.gov/wisedash_dews)
+- E-mail: jared.knowles@dpi.wi.gov / jeknowles@wisc.edu
+- GitHub: [http://www.github.com/jknowles](http://www.github.com/jknowles)
+- Homepage: [www.jaredknowles.com](http://www.jaredknowles.com/)
+- Google+: [https://plus.google.com/+JaredKnowles](https://plus.google.com/+JaredKnowles)
+
+
+Further Resources
+====================
+- <small>The Signal and the Noise: Why So Many Predictions Fail — but Some Don't. Nate Silver. (2012). Penguin.
+- The Black Swan: Second Edition: The Impact of the Highly Improbable (2nd ed. 2010). Nassim Taleb.  Random House.
+- An Introduction to Statistical Learning (2013). Gareth James, Daniela Witten, Trevor Hastie and Robert Tibshirani. Springer. [Download the book](http://www-bcf.usc.edu/~gareth/ISL/index.html)
+- Elements of Statistical Learning (Second Edition, 2011). Trevor Hastie, 
+Robert Tibshirani, and Jerome Friedman. Springer [Download the book](http://statweb.stanford.edu/~tibs/ElemStatLearn/)
+</small>
+
+An Aside on Unsupervised Models
+=====================================
+
+```{r clusters, echo=FALSE, results='hide', fig.align='center', fig.height=4.5, fig.width=6, dev.args=list(bg="white")}
+x <- rbind(matrix(rnorm(100, sd = 0.3), ncol = 2),
+           matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2))
+colnames(x) <- c("x", "y")
+cl <- kmeans(x, 2)
+par(bg = 'white')
+plot(x, col = cl$cluster)
+points(cl$centers, col = 1:2, pch = 8, cex = 2)
+# 
+# # sum of squares
+# ss <- function(x) sum(scale(x, scale = FALSE)^2)
+# 
+# ## cluster centers "fitted" to each obs.:
+# fitted.x <- fitted(cl);  head(fitted.x)
+# resid.x <- x - fitted(cl)
+# 
+# **Unsupervised** techniques like cluster, principal components, factor, and 
+# latent variable analysis can be very useful!
+# 
+# spec <- read.table("data/benchmarks.txt", header=TRUE, sep="\t")
+# spec2 <- read.table("data/summaries.txt", header=TRUE, sep="\t")
+# 
+# - Model Selection and Model Averaging (2008). Gerda Claeskens and Nils Lid Hjort. [Get the book](http://www.amazon.com/Selection-Averaging-Statistical-Probabilistic-Mathematics/dp/0521852250)
+# - Model Selection and Multimodel Inference: A Practical Information-Theoretic Approach 
+# (2004). Kenneth P. Burnham and David R. Anderson [Get the book](http://www.amazon.com/Model-Selection-Multimodel-Inference-Information-Theoretic/dp/1441929738/ref=pd_sim_b_1)
+```
+
+- These are familiar techniques for dimension reduction like cluster analysis, factor 
+analysis, or principal components analysis
+- Can be useful for starting an analysis, looking for structure
+
+
+
+Tradeoffs
+========================
+
+```{r echo=FALSE, fig.width=12, fig.height=8, fig.align='center'}
+
+table1_w <- reshape(table1, direction='wide', timevar="grp", idvar="method")
+
+qplot(method, auc.2 - auc.1, data=table1_w, geom='bar', stat='identity') + 
+  theme_dpi() + theme(axis.text.x=element_text(angle=30, vjust=.5))
+
+```
