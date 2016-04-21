@@ -1,0 +1,161 @@
+---
+title: "Building a Large Scale Machine Learning Application in Government"
+author: "Jared E. Knowles"
+date: "April 27, 2016"
+output:
+  ioslides_presentation:
+    css: custom.css
+    widescreen: true
+    self contained: true
+    fig_width: 8
+    fig_height: 8
+---
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+opts_chunk$set(dev="png", 
+               echo=FALSE, warning=FALSE, message=FALSE, dpi=68)
+```
+
+## The Promise of Machine Learning in Education
+
+- Educators are facing a work environment that is increasingly complex, data 
+rich, and time/labor intensive
+- Performance measures, accountability pressure, and a desire to understand 
+student progression have created a proliferation of data
+- Many schools and school districts are unable to devote resources to data analysis
+- Data is collected, stored, and reported -- but often not able to be used to 
+assist educators
+
+**This is the promise**
+
+## Setting the Context
+
+- Background on DEWS
+- Based on experience of deploying a machine learning application to all school 
+districts in the state of Wisconsin
+- Focus on the challenges of successful implementation and deployment unique to 
+this government context
+
+## About DEWS
+
+- DEWS is the Wisconsin Dropout Early Warning System
+- DEWS 
+
+## What do we want from an EWS?
+- **Early** identification in time to make interventions
+- **Accurately** identifying students who need assistance and those who do not
+- **Transparency** in how predictions were made and how students are labeled
+- **Reproducibility** in the predictions so they vary with changes in underlying behaviors 
+not the models
+- **Scaleable** to a diverse array of student and school contexts
+
+## What is out there? {.flexbox .vcenter}
+
+<small>Adapted from Bowers, Sprott, and Taff 2013</small> 
+
+```{r ewslitplot, fig.align='center', fig.height=7, fig.width=9.5}
+library(png)
+library(grid)
+img <- readPNG("img/ewsLITplot2.png")
+grid.raster(img, interpolate = TRUE)
+```
+
+
+## What is DEWS? {.smaller}
+
+DEWS is an applied statistical model that combines several major features:
+
+>- Data import, filtering, and cleaning for analysis from the state longitudinal 
+database
+>- A machine learning algorithm to search for the best predictive model
+>- A prediction routine to apply models to current students
+>- An exporting feature to push predictions into the state business intelligence 
+tool, WISEdash for Districts
+>- A display layer available to schools and districts securely for exploring the results
+>- In reality, it resembles **software** as much as a statistical analysis
+
+
+## Under the Hood of DEWS {.smaller}
+
+DEWS consists of several sub-routines that can be thought of as states of building 
+a statistical model
+
+1. Data acquisition
+2. Data cleaning, normalizing, and standardizing
+3. Model feature and model algorithm search
+4. Model testing
+5. Model selection
+6. New case scoring
+7. Prediction export for reporting
+
+All modules are built in the free and open source statistical computing language, [R](http://www.r-project.org/). 
+
+## DEWS by the Numbers .{smaller}
+- Analyzes over **350,000** historical records of student graduation
+- Provides predictions on over **240,000** current students, in four grades, in the state
+- Produces predictions on students in over **1,000** schools
+- Selects from over **50** candidate statistical models **per grade**
+- Hundreds of users have accessed thousands of individual student reports across 
+nearly every Wisconsin school district
+- Open sourced
+
+
+## The DEWS Workflow
+
+```{r echo=FALSE, fig.align='center', fig.height=7, fig.width=9.5}
+library(png)
+library(grid)
+img <- readPNG("img/DEWS_workflow_diagram.png")
+grid.raster(img)
+# <div style="width:300px; height:200px; align:center">
+# ![DEWS Workflow](img/DEWS_workflow_diagram.png)
+# </div>
+```
+
+
+## Why accuracy? 
+
+**Opportunity cost**
+
+>- Accuracy matters tremendously at scale. 
+>- 1,000 schools receiving on average 240 predictions each. 
+>- Each prediction reviewed by 3-5 staff for ~5 minutes
+>- 3 x 240 x $\frac{1}{12}$ = 60 hours
+>- 5 x 240 x $\frac{1}{12}$ = 100 hours
+>- Across 1,000 schools thats 60,000 to 100,000 hours of work 
+>- This could cost from $1 million to $4 million annually
+
+
+## How did DEWS get done?
+
+1. Focus on defining the goal and purpose of system
+2. Identify allies and discuss prototype
+3. Seek out stakeholders and solicit input and respond to criticisms
+4. Pilot, pilot, pilot
+5. Switch to deployment
+
+
+## Data and School Completion
+
+1. Student dropout is a phenomenon that has roots much earlier in the education 
+pipeline than high school. 
+
+2. Current early identification strategies are of unknown accuracy, difficult 
+to implement, and rely on late breaking data. 
+
+3. The predictors of dropout vary across jurisdictions, making one size fits 
+all models inefficient, biased, or both. 
+
+4. Teachers, counselors, principals, and other school staff are spending valuable 
+time assessing student dropout likelihood using manual identification. 
+
+**Early warning systems promise to reduce this burden and increase accuracy.**
+
+## Contact Info
+
+- DEWS Homepage: [http://www.dpi.wi.gov/dews](http://www.dpi.wi.gov/dews)
+- E-mail: jknowles@gmail.com
+- GitHub: [http://www.github.com/jknowles](http://www.github.com/jknowles)
+- Homepage: [www.jaredknowles.com](http://www.jaredknowles.com/)
+- Twitter: @jknowles
