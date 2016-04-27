@@ -129,11 +129,39 @@ grid.raster(img)
 
 ## How did DEWS get done?
 
-1. Focus on defining the goal and purpose of system
-2. Identify allies and discuss prototype
-3. Seek out stakeholders and solicit input and respond to criticisms
-4. Pilot, pilot, pilot
-5. Switch to deployment
+- Identify the problem
+- Assemble a team
+- Demo your product
+- Iterate
+- Deploy
+
+## Identification
+
+> It's better to solve the right problem approximately than to solve the 
+> wrong problem exactly 
+
+~ John Tukey
+
+## Strategies for Identification
+
+- Find policy relevant project
+
+## Assemble
+
+<img src="img/voltron.jpg" title="Voltron" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
+
+## Demo
+
+<img src="img/prototype.png" title="Prototype" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
+
+
+## Iterate
+<img src="img/computerhistory.jpg" title="Prototype" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
+
+
+## Deploy
+<img src="img/spaceX.jpg" title="Deploy" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
+
 
 
 ## Data and School Completion
