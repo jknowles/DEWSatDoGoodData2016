@@ -50,16 +50,6 @@ this government context
 not the models
 - **Scaleable** to a diverse array of student and school contexts
 
-## What is out there? {.flexbox .vcenter}
-
-<small>Adapted from Bowers, Sprott, and Taff 2013</small> 
-
-```{r ewslitplot, fig.align='center', fig.height=7, fig.width=9.5}
-library(png)
-library(grid)
-img <- readPNG("img/ewsLITplot2.png")
-grid.raster(img, interpolate = TRUE)
-```
 
 
 ## What is DEWS? {.smaller}
@@ -91,7 +81,8 @@ a statistical model
 
 All modules are built in the free and open source statistical computing language, [R](http://www.r-project.org/). 
 
-## DEWS by the Numbers .{smaller}
+## DEWS by the Numbers {.smaller}
+
 - Analyzes over **350,000** historical records of student graduation
 - Provides predictions on over **240,000** current students, in four grades, in the state
 - Produces predictions on students in over **1,000** schools
@@ -144,41 +135,150 @@ grid.raster(img)
 
 ## Strategies for Identification
 
-- Find policy relevant project
+- Find policy relevant project with engaged leadership
+  - Leadership will need to advance project and focus resources
+- Seek out existing solutions and identify strength and weaknesses
+  - Must always be better than off the shelf
+- Focus on a space where a solution will be well received
+  - What is the priority of this problem?
+- Align solution to perceived needs
+  - Do not propose overengineered solution, complexity must = need
 
-## Assemble
+## Create Shared Goals
 
-<img src="img/voltron.jpg" title="Voltron" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
+- Problem needs to be identified, but also need to identify values used in 
+gauging solutions
+- Shared values might be around accuracy, reliability, speed, or usability
+- Set clear expectations about tradeoffs and be honest about reality of solution
+- Use shared goals to ground work as more people participate in the project
+
+## The Dropout Problem
+
+<img src="img/cumulativesumplot.png" title="Dropout" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto; max-width:auto; max-height:auto" />
+
 
 ## Demo
 
-<img src="img/prototype.png" title="Prototype" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
+<img src="img/prototype.png" title="Prototype" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto; max-width:auto; max-height:auto" />
+
+## Show Early Success
+
+- Build a prototype
+- Communicate it to others
+- Create enthusiasm
+- Graciously get feedback
+
+## Prototype
+
+- Can be crude, but must show potential
+
+<img src="img/DEWSPrototype.png" title="DEWS Mockup" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto; max-width:auto; max-height:auto" />
+
+## Empower Feedback
+
+- Show the project in a familiar context
+- Avoid jargon and focus on results
+- Frame discussion of project to specific skills, goals, needs of audience
+
+## Framing Results {.flexbox .vcenter}
+
+<small>Adapted from Bowers, Sprott, and Taff 2013</small> 
+
+```{r ewslitplot, fig.align='center', fig.height=7, fig.width=9.5}
+library(png)
+library(grid)
+img <- readPNG("img/ewsLITplot2.png")
+grid.raster(img, interpolate = TRUE)
+```
+
+## Framing Results {.flexbox .vcenter}
+
+<small>Prototype results</small> 
+
+```{r earlyResults, fig.align='center', fig.height=7, fig.width=9.5}
+img <- readPNG("img/alternativemodels-1.png")
+grid.raster(img, interpolate = TRUE)
+```
+
+## Get Feedback
+
+- Initial audiences are key to building momentum and support for project
+- Frame challenges as opportunities for future growth
+- Convert enthusiasm into tangible support 
+
+## Assemble
+
+<img src="img/voltron.jpg" title="Voltron" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto; max-width:800px; max-height:550px" />
+
+## Working Alone
+
+### Not realistic!
+
+<img src="img/multitask.gif" title="Monster Multitasking" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;" />
+
+## Self-reflection
+
+<img src="img/babyMirror.gif" title="Whoops!" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;" />
+
+## Structuring Your Team
+
+```{r 3by3}
+plotdf <- expand.grid(tech = c("Technical", "Substantive"), 
+                      depth = c("Active", "Passive"), 
+                      stakeholder = c("Internal", "External"))
+
+plotdf$y <- 0
+library(ggplot2)
+
+ggplot(plotdf, aes(y = y)) + facet_grid(stakeholder ~ tech + depth) + 
+  theme_bw(base_size = 16) + 
+  labs(x = "", y = "", title = "Model of Stakeholders") +
+  theme(axis.text.y = element_blank(), 
+        panel.grid = element_blank(), 
+        axis.ticks.y = element_blank())
+
+```
+
+## Engagement
+
+- Team members need tasks they can succeed at
+- Input needs to be heard, reviewed, and acted on
+- Process needs to be transparent and clear to key audiences
+- This takes time!
+
+## Build a Roadmap
+
+- Give yourself lead time
+
+
 
 
 ## Iterate
+
 <img src="img/computerhistory.jpg" title="Prototype" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
+
+## Public Context Differs
+
+
+## Show Improvement
+
+- Help those who contribute see their work
+
+<img src="img/caretROCs.png" title="Prototype" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
+
+## Prepare for Final
+
+<img src="img/caretplotsTESTDATA-1.png" title="Final Results" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
+
+## Final
+
+<img src="img/ensembCompROC.png" title="Ensemble Results" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
+
 
 
 ## Deploy
-<img src="img/spaceX.jpg" title="Deploy" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto;"/>
 
-
-
-## Data and School Completion
-
-1. Student dropout is a phenomenon that has roots much earlier in the education 
-pipeline than high school. 
-
-2. Current early identification strategies are of unknown accuracy, difficult 
-to implement, and rely on late breaking data. 
-
-3. The predictors of dropout vary across jurisdictions, making one size fits 
-all models inefficient, biased, or both. 
-
-4. Teachers, counselors, principals, and other school staff are spending valuable 
-time assessing student dropout likelihood using manual identification. 
-
-**Early warning systems promise to reduce this burden and increase accuracy.**
+<img src="img/spaceX.jpg" title="Launch" alt="FP" style="display: block; margin:0 auto; height:auto; width:auto; max-width:800px; max-height:550px" />
 
 ## Contact Info
 
